@@ -1,0 +1,47 @@
+FrameWidgetClass RootFrame {
+ color 0 0 0 0
+ position 0 0
+ size 1 1
+ {
+  PanelWidgetClass VaultPanel {
+   color 0.0588 0.0588 0.0588 0.9
+   position 0 -0.04935
+   size 0.5 0.78486
+   halign center_ref
+   valign center_ref
+   {
+    TextWidgetClass Title {
+     position 0 0.02
+     size 1 0.08
+     halign center_ref
+     text "Vault"
+     "text halign" center
+    }
+    TextListboxWidgetClass ItemList {
+     position 0.04779 0.21288
+     size 0.9 0.5
+    }
+    ButtonWidgetClass BtnRefresh {
+     position 0.04484 0.85968
+     size 0.4 0.08
+     text "Refresh"
+    }
+    ButtonWidgetClass BtnClaim {
+     position 0.54631 0.85968
+     size 0.4 0.08
+     text "Claim"
+    }
+    TextWidgetClass StatusText {
+     position 0.04631 0.75114
+     size 0.9 0.08
+     "text halign" center
+    }
+    ButtonWidgetClass BtnClose {
+     position 0.76774 0.11396
+     size 0.22959 0.06
+     text "Close"
+    }
+   }
+  }
+ }
+}

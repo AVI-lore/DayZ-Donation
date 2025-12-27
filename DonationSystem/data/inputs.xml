@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<modded_inputs>
+    <inputs>
+        <actions>
+            <!-- Название действия для открытия меню доната -->
+            <input name="UADonationMenu" loc="Donation Menu"/>
+        </actions>
+    </inputs>
+    <preset>
+        <!-- Привязка клавиши B к действию -->
+        <input name="UADonationMenu">
+            <btn name="kB"/>
+        </input>
+    </preset>
+</modded_inputs>

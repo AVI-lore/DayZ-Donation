@@ -1,0 +1,48 @@
+FrameWidgetClass RootFrame {
+ color 0 0 0 0
+ position 0 0
+ size 1 1
+ {
+  PanelWidgetClass PrizesPanel {
+   color 0.0588 0.0588 0.0588 0.9
+   position 0 0
+   size 0.6 0.7
+   halign center_ref
+   valign center_ref
+   {
+    TextWidgetClass Title {
+     position 0 0.02
+     size 1 0.08
+     halign center_ref
+     text "MY PRIZES"
+     "text halign" center
+     font "gui/fonts/metron"
+    }
+    TextListboxWidgetClass PrizesList {
+     position 0.05 0.15
+     size 0.9 0.6
+    }
+    TextWidgetClass StatusText {
+     position 0.05 0.78
+     size 0.9 0.05
+     "text halign" center
+    }
+    ButtonWidgetClass BtnClaim {
+     position 0.05 0.86
+     size 0.28 0.08
+     text "Claim Selected"
+    }
+    ButtonWidgetClass BtnClaimAll {
+     position 0.36 0.86
+     size 0.28 0.08
+     text "Claim All"
+    }
+    ButtonWidgetClass BtnClose {
+     position 0.67 0.86
+     size 0.28 0.08
+     text "Close"
+    }
+   }
+  }
+ }
+}

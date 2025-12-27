@@ -1,0 +1,63 @@
+FrameWidgetClass RootFrame {
+ color 0 0 0 0
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ {
+  PanelWidgetClass MainPanel {
+   color 0.0588 0.0588 0.0588 0.9
+   position 0 0
+   size 0.3 0.5
+   halign center_ref
+   valign center_ref
+   {
+    TextWidgetClass Title {
+     position 0 0.02
+     size 1 0.08
+     halign center_ref
+     valign top_ref
+     text "Donation Menu"
+     font "gui/fonts/metron"
+     "text halign" center
+     "text valign" center
+    }
+    ButtonWidgetClass BtnVault {
+     position 0.1 0.15
+     size 0.8 0.09
+     halign center_ref
+     valign top_ref
+     text "Vault"
+    }
+    ButtonWidgetClass BtnHistory {
+     position 0.1 0.27
+     size 0.8 0.09
+     halign center_ref
+     valign top_ref
+     text "History"
+    }
+    ButtonWidgetClass BtnRoulette {
+     position 0.1 0.39
+     size 0.8 0.09
+     halign center_ref
+     valign top_ref
+     text "Roulette"
+    }
+    ButtonWidgetClass BtnPrizes {
+     position 0.1 0.51
+     size 0.8 0.09
+     halign center_ref
+     valign top_ref
+     text "Prizes"
+    }
+    ButtonWidgetClass BtnClose {
+     position 0.1 0.75
+     size 0.8 0.1
+     halign center_ref
+     valign top_ref
+     text "Close"
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,192 @@
+// DonationSystem/scripts/4_World/DonationSystem/PlayerBase.c
+// КЛИЕНТСКАЯ ЧАСТЬ - правильная обработка RPC
+
+modded class PlayerBase
+{
+    // Временное хранилище для данных RPC
+    private ref array<int> m_PendingVaultIds;
+    private ref array<string> m_PendingVaultClassnames;
+    private bool m_HasPendingVaultData = false;
+    
+    private ref array<int> m_PendingHistoryIds;
+    private ref array<string> m_PendingHistoryClassnames;
+    private ref array<string> m_PendingHistoryDates;
+    private bool m_HasPendingHistoryData = false;
+    
+    private bool m_HasPendingClaimResult = false;
+    private bool m_PendingClaimSuccess;
+    private string m_PendingClaimMessage;
+    
+    override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
+    {
+        super.OnRPC(sender, rpc_type, ctx);
+        
+        // Только на клиенте
+        if (GetGame().IsServer())
+            return;
+        
+        // Обрабатываем донат RPC
+        switch (rpc_type)
+        {
+            case 21002: // DS_RPC.SEND_VAULT
+                Print("[DonationSystem] CLIENT: Received SEND_VAULT");
+                ReceiveVaultData(ctx);
+                break;
+                
+            case 21004: // DS_RPC.CLAIM_RESULT
+                Print("[DonationSystem] CLIENT: Received CLAIM_RESULT");
+                ReceiveClaimResult(ctx);
+                break;
+                
+            case 21006: // DS_RPC.SEND_HISTORY
+                Print("[DonationSystem] CLIENT: Received SEND_HISTORY");
+                ReceiveHistoryData(ctx);
+                break;
+        }
+    }
+    
+    private void ReceiveVaultData(ParamsReadContext ctx)
+    {
+        int count;
+        if (!ctx.Read(count))
+        {
+            Print("[DonationSystem] CLIENT: Failed to read vault count");
+            return;
+        }
+        
+        Print("[DonationSystem] CLIENT: Reading " + count + " vault items");
+        
+        m_PendingVaultIds = new array<int>;
+        m_PendingVaultClassnames = new array<string>;
+        
+        int i;
+        for (i = 0; i < count; i++)
+        {
+            int id;
+            string classname;
+            
+            if (!ctx.Read(id) || !ctx.Read(classname))
+            {
+                Print("[DonationSystem] CLIENT: Failed to read vault item " + i);
+                continue;
+            }
+            
+            m_PendingVaultIds.Insert(id);
+            m_PendingVaultClassnames.Insert(classname);
+        }
+        
+        m_HasPendingVaultData = true;
+        Print("[DonationSystem] CLIENT: Vault data stored, count: " + m_PendingVaultIds.Count());
+    }
+    
+    private void ReceiveClaimResult(ParamsReadContext ctx)
+    {
+        if (!ctx.Read(m_PendingClaimSuccess) || !ctx.Read(m_PendingClaimMessage))
+        {
+            Print("[DonationSystem] CLIENT: Failed to read claim result");
+            return;
+        }
+        
+        m_HasPendingClaimResult = true;
+        Print("[DonationSystem] CLIENT: Claim result stored: " + m_PendingClaimSuccess);
+    }
+    
+    private void ReceiveHistoryData(ParamsReadContext ctx)
+    {
+        int count;
+        if (!ctx.Read(count))
+        {
+            Print("[DonationSystem] CLIENT: Failed to read history count");
+            return;
+        }
+        
+        Print("[DonationSystem] CLIENT: Reading " + count + " history items");
+        
+        m_PendingHistoryIds = new array<int>;
+        m_PendingHistoryClassnames = new array<string>;
+        m_PendingHistoryDates = new array<string>;
+        
+        int i;
+        for (i = 0; i < count; i++)
+        {
+            int id;
+            string classname;
+            string date;
+            
+            if (!ctx.Read(id) || !ctx.Read(classname) || !ctx.Read(date))
+            {
+                Print("[DonationSystem] CLIENT: Failed to read history item " + i);
+                continue;
+            }
+            
+            m_PendingHistoryIds.Insert(id);
+            m_PendingHistoryClassnames.Insert(classname);
+            m_PendingHistoryDates.Insert(date);
+        }
+        
+        m_HasPendingHistoryData = true;
+        Print("[DonationSystem] CLIENT: History data stored, count: " + m_PendingHistoryIds.Count());
+    }
+    
+    // ========== ПУБЛИЧНЫЕ МЕТОДЫ ДЛЯ МЕНЮ ==========
+    
+    bool HasPendingVaultData()
+    {
+        return m_HasPendingVaultData;
+    }
+    
+    void ConsumePendingVaultData(out array<int> ids, out array<string> classnames)
+    {
+        if (!m_HasPendingVaultData)
+            return;
+        
+        ids = m_PendingVaultIds;
+        classnames = m_PendingVaultClassnames;
+        
+        m_HasPendingVaultData = false;
+        m_PendingVaultIds = NULL;
+        m_PendingVaultClassnames = NULL;
+        
+        Print("[DonationSystem] CLIENT: Vault data consumed");
+    }
+    
+    bool HasPendingClaimResult()
+    {
+        return m_HasPendingClaimResult;
+    }
+    
+    void ConsumePendingClaimResult(out bool success, out string message)
+    {
+        if (!m_HasPendingClaimResult)
+            return;
+        
+        success = m_PendingClaimSuccess;
+        message = m_PendingClaimMessage;
+        
+        m_HasPendingClaimResult = false;
+        
+        Print("[DonationSystem] CLIENT: Claim result consumed");
+    }
+    
+    bool HasPendingHistoryData()
+    {
+        return m_HasPendingHistoryData;
+    }
+    
+    void ConsumePendingHistoryData(out array<int> ids, out array<string> classnames, out array<string> dates)
+    {
+        if (!m_HasPendingHistoryData)
+            return;
+        
+        ids = m_PendingHistoryIds;
+        classnames = m_PendingHistoryClassnames;
+        dates = m_PendingHistoryDates;
+        
+        m_HasPendingHistoryData = false;
+        m_PendingHistoryIds = NULL;
+        m_PendingHistoryClassnames = NULL;
+        m_PendingHistoryDates = NULL;
+        
+        Print("[DonationSystem] CLIENT: History data consumed");
+    }
+}

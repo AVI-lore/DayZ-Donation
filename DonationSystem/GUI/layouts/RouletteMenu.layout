@@ -1,0 +1,101 @@
+FrameWidgetClass RootFrame {
+ color 0 0 0 0
+ position 0 0
+ size 1 1
+ {
+  PanelWidgetClass RoulettePanel {
+   color 0.0588 0.0588 0.0588 0.9
+   position 0 0
+   size 0.7 0.6
+   halign center_ref
+   valign center_ref
+   {
+    TextWidgetClass Title {
+     position 0 0.02
+     size 1 0.08
+     halign center_ref
+     text "ROULETTE"
+     "text halign" center
+     font "gui/fonts/metron"
+    }
+    PanelWidgetClass TypePanel {
+     color 0.098 0.098 0.098 1
+     position 0.02 0.12
+     size 0.15 0.3
+     {
+      ButtonWidgetClass BtnFreeType {
+       position 0.05 0.05
+       size 0.9 0.4
+       text "FREE"
+      }
+      ButtonWidgetClass BtnPaidType {
+       position 0.05 0.55
+       size 0.9 0.4
+       text "PAID"
+      }
+     }
+    }
+    PanelWidgetClass SpinPanel {
+     color 0.098 0.098 0.098 1
+     position 0.19 0.12
+     size 0.79 0.8
+     {
+      TextWidgetClass Slot1Name {
+       position 0.02 0.55
+       size 0.18 0.05
+       text "Item1"
+       "text halign" center
+      }
+      TextWidgetClass Slot2Name {
+       position 0.21 0.55
+       size 0.18 0.05
+       text "Item2"
+       "text halign" center
+      }
+      TextWidgetClass Slot3Name {
+       position 0.4 0.55
+       size 0.18 0.05
+       text "Item3"
+       "text halign" center
+      }
+      TextWidgetClass Slot4Name {
+       position 0.59 0.55
+       size 0.18 0.05
+       text "Item4"
+       "text halign" center
+      }
+      TextWidgetClass Slot5Name {
+       position 0.78 0.55
+       size 0.18 0.05
+       text "Item5"
+       "text halign" center
+      }
+      TextWidgetClass WinnerArrow {
+       position 0.4 0.62
+       size 0.18 0.05
+       text "▼ WINNER ▼"
+       "text halign" center
+       "text color" 0.2 1 0.2 1
+      }
+      TextWidgetClass InfoText {
+       position 0.05 0.72
+       size 0.9 0.08
+       text "Press SPIN to start"
+       "text halign" center
+      }
+      ButtonWidgetClass BtnSpin {
+       position 0.1 0.85
+       size 0.35 0.1
+       text "SPIN"
+      }
+      ButtonWidgetClass BtnClose {
+       position 0.55 0.85
+       size 0.35 0.1
+       text "CLOSE"
+      }
+     }
+    }
+   }
+  }
+ }
+}
